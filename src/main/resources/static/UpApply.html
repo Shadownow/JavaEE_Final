@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UpApply</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var yonghu= window.opener.document.getElementById("1").value;
+            document.getElementById("1").value = yonghu;
+            var state = window.opener.document.getElementById("Median6").value;
+            if (state == "已加入") {
+                document.getElementById("submit").disabled = true;
+                document.getElementById("submit").value = "已加入";
+            }
+            else if (state == "审批中") {
+                document.getElementById("submit").disabled = true;
+                document.getElementById("submit").value = "审批中";
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function beforeSure() {
+            var courseId = window.opener.document.getElementById("Median3").value;
+            var email = document.getElementById("1").value;
+            $.ajax({
+                url: "/UpApply",
+                type: "POST",
+                data: {
+                    courseId: courseId,
+                    email: email
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    alert("提交成功！");
+
+                    //window.open("index.jsp");
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+    </script>
+</head>
+<body onload="load();">
+<div align="center">
+    <h1>班级申请详情</h1>
+    欢迎您：<input type="text" style="width: 200px; height:35px;" value="请输入内容" style="border:0px;" id="1" disabled=true><br>
+    <input type="button" value="提交" id="submit" style="width: 80px; height: 30px;" onclick="beforeSure()"> <br><br>
+    <a href="StudentIndex.html">返回首页</a>
+</div>
+</body>
+</html>

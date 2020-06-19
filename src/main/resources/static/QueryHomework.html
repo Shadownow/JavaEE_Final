@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QueryHomework</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+             //var email =  "欢迎您 "+window.opener.document.getElementById("1").value;
+            //var emailemail = window.opener.document.getElementById("1").value;
+            var email = window.opener.document.getElementById("1").value;
+            document.getElementById("1").value = email;
+            $.ajax({
+                url: "/QueryHomework",
+                type: "POST",
+                data: {email: email},
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var tableData = "<tr><tr align=\"center\" bgcolor=\"#7fffd4\" height=\"50\"><td>班级号</td><td>作业号</td><td>作业标题</td><td>作业内容</td><td>截止时间</td><td>状态</td><td>分数</td><td>回答</td><td>详情</td></tr>"
+                    //动态增加5个td,并且把data数组的五个值赋给每个td
+                    for (var i = 0; i < data.length; i++) {
+                        tableData += "<tr align=\"center\" bgcolor=\"white\" height=\"30\"><td>" + data[i].班级号 + "</td>" + "<td>" + data[i].作业号 + "</td>" + "<td>" + data[i].作业标题 + "</td>" + "<td>" + data[i].作业内容 + "</td>" + "<td>" + data[i].截止时间 + "</td>" + "<td>" + data[i].状态 + "</td>"+ "<td>" + data[i].分数 + "</td>"+ "<td>" + data[i].回答 + "</td><td><input type=\"button\" value=\"详情\" /></td></tr>"
+
+                    }
+                    //现在tableData已经生成好了，把他赋值给上面的tbody
+                    $("#tbody1").html(tableData)
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+        }
+    </script>
+
+</head>
+<body onload="load();">
+<div align="center">
+    <h1>作业一览表</h1>
+    欢迎您：<input type="text" style="width: 200px; height:35px;" value="请输入内容" style="border:0px;" id="1" disabled=true><br>
+</div>
+
+<br>
+<table align="center" width="960" border="1" bgcolor="black" cellpadding="1" cellspacing="1">
+    <tbody id="tbody1">
+    </tbody>
+</table>
+<br>
+<div align="center">
+    <a href="StudentIndex.html">上一页</a>
+</div>
+<br>
+<input type="hidden" value="" id="Median2"></input>
+<input type="hidden" value="" id="Median3"></input>
+<input type="hidden" value="" id="Median4"></input>
+<input type="hidden" value="" id="Median5"></input>
+<input type="hidden" value="" id="Median6"></input>
+<input type="hidden" value="" id="Median7"></input>
+<input type="hidden" value="" id="Median8"></input>
+<input type="hidden" value="" id="Median9"></input>
+<script type="text/javascript">
+    $(function () {
+        $("#tbody1").on("click", ":button", function (event) {
+            $("#Median2").val($(this).closest("tr").find("td").eq(0).text());
+            $("#Median3").val($(this).closest("tr").find("td").eq(1).text());
+            $("#Median4").val($(this).closest("tr").find("td").eq(2).text());
+            $("#Median5").val($(this).closest("tr").find("td").eq(3).text());
+            $("#Median6").val($(this).closest("tr").find("td").eq(4).text());
+            $("#Median7").val($(this).closest("tr").find("td").eq(5).text());
+            $("#Median8").val($(this).closest("tr").find("td").eq(6).text());
+            $("#Median9").val($(this).closest("tr").find("td").eq(7).text());
+            window.open("UpHomework.html");
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CreateCourse</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+    <!--点击提交按钮事件-->
+    <script type="text/javascript">
+        function beforeSubmit() {
+            var email = document.getElementById("1").value;
+            var courseId = document.getElementById("2").value;
+            var courseName = document.getElementById("3").value;
+            $.ajax({
+                url: "/CreateCourse",
+                type: "POST",
+                data: {
+                    email: email,
+                    courseId: courseId,
+                    courseName: courseName
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.result == "课程号不能为空") {
+                        alert("班级号不能为空")
+                    } else if (data.result == "课程名不能为空") {
+                        alert("班级名不能为空")
+                    } else if (data.result == "该课程号已存在") {
+                        alert("该班级号已存在")
+                    }else{
+                        alert("创建成功")
+                    }
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+    </script>
+
+    <script type="text/javascript">
+        function load() {
+            var yonghu= window.opener.document.getElementById("1").value;
+            document.getElementById("1").value = yonghu;
+        }
+    </script>
+    <!--验证学号格式-->
+    <script type="text/javascript">
+        //onblur失去焦点事件，用户离开输入框时执行 JavaScript 代码：
+        //函数：验证邮箱格式
+        function checknum(num){
+            if(num.length != 8)
+            {
+                alert("学号为八位，请重新输入");
+                document.getElementById("2").value="";
+            }
+        }
+    </script>
+</head>
+<body onload="load()">
+<div align="center">
+    <h1>创建班级</h1>
+    <form action="AddStudentServlet" method="post">
+
+        欢迎您：<input type="text" style="width: 200px; height:35px;" value="请输入内容" style="border:0px;" id="1" disabled=true>
+
+        <br><br>
+
+        班级号:
+        <input type="text" name="courseId" style="width: 200px; height:35px;" value=""
+               id="2" onblur="checknum(this.value)" oninput="value=value.replace(/[^\d]/g,'')">
+
+        <br><br>
+
+        班级名:
+        <input type="text" name="courseName" style="width: 200px; height:35px;" value=""
+               id="3">
+
+        <br><br>
+
+        <input type="button" id="4" value="确认" style="width: 60px; height: 30px;" onclick="beforeSubmit()">&nbsp&nbsp<input
+            type="reset" style="width: 60px; height: 30px;" value="清空">
+    </form>
+    <br>
+    <a href="TeacherIndex.html">返回上一页</a>
+</div>
+</body>
+</html>
+
+
+

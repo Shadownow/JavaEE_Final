@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ProcessHomework</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function load() {
+            var yonghu= window.opener.document.getElementById("1").value;
+            document.getElementById("1").value = yonghu;
+            var title = window.opener.document.getElementById("Median4").value;
+            var content = window.opener.document.getElementById("Median5").value;
+            var answer = window.opener.document.getElementById("Median9").value;
+            var state = window.opener.document.getElementById("Median8").value;
+            var result =  window.opener.document.getElementById("Median10").value;
+            document.getElementById("title").value = title;
+            document.getElementById("content").value = content;
+            document.getElementById("answer").value = answer;
+            if(result!="暂无"){
+                document.getElementById("dafen").value = result;
+            }
+            if (state == "已批阅") {
+                document.getElementById("dafen").disabled = true;
+                document.getElementById("submit").disabled = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function beforeSure() {
+            var homeworkId = window.opener.document.getElementById("Median3").value;
+            var studentId = window.opener.document.getElementById("Median7").value;
+            var answer = window.opener.document.getElementById("Median9").value;
+            var result = document.getElementById("dafen").value;
+            $.ajax({
+                url: "/ProcessHomework",
+                type: "POST",
+                data: {
+                    homeworkId: homeworkId,
+                    studentId: studentId,
+                    answer: answer,
+                    result: result
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    alert("批阅成功！");
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+    </script>
+</head>
+<body onload="load();">
+<div align="center">
+    <h1>答题卡</h1>
+    欢迎您：<input type="text" style="width: 200px; height:35px;" value="请输入内容" style="border:0px;" id="1" disabled=true><br>
+    <input type="text" name="title" id="title" style="width:400px; height:60px;border:black 2px solid" value=""
+           onfocus=this.blur()><br>
+    <input type="text" name="content" id="content" style="width:400px; height:180px;border:black 2px solid" value=""
+           onfocus=this.blur()><br>
+    <input type="text" name="answer" id="answer" style="width:400px; height:180px;border:black 2px solid"
+           value="" disabled=true><br><br>
+    分数：<input type="text" style="width: 200px; height:35px;" value="" style="border:0px;" id="dafen">
+    <input type="button" value="提交" id="submit" style="width: 80px; height: 30px;" onclick="beforeSure()"> <br><br>
+    <a href="TeacherIndex.html">返回首页</a>
+</div>
+</body>
+</html>

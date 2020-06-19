@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PublishHomework</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+    <!--点击提交按钮事件-->
+    <script type="text/javascript">
+        function beforeSubmit() {
+            var email = document.getElementById("1").value;
+            var courseId = document.getElementById("2").value;
+            var homeworkId = document.getElementById("3").value;
+            var homeworkTitle = document.getElementById("4").value;
+            var homeworkContent = document.getElementById("5").value;
+            var deadline = document.getElementById("6").value;
+            $.ajax({
+                url: "/PublishHomework",
+                type: "POST",
+                data: {
+                    email: email,
+                    courseId: courseId,
+                    homeworkId: homeworkId,
+                    homeworkContent: homeworkContent,
+                    deadline: deadline,
+                    homeworkTitle: homeworkTitle
+                },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.result == "课程号不能为空") {
+                        alert("班级号不能为空")
+                    } else if (data.result == "对当前班级无操作权限") {
+                        alert("对当前班级无操作权限")
+                    } else if (data.result == "班级不存在") {
+                        alert("班级不存在")
+                    } else if (data.result == "作业号不能为空") {
+                        alert("作业号不能为空")
+                    } else if (data.result == "作业标题不能为空") {
+                        alert("作业标题不能为空")
+                    } else if (data.result == "作业内容不能为空") {
+                        alert("作业内容不能为空")
+                    } else if (data.result == "截止日期不能为空") {
+                        alert("截止日期不能为空")
+                    } else if (data.result == "作业号已存在") {
+                        alert("作业号已存在")
+                    }else{
+                        alert("发布成功")
+                    }
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+
+        }
+    </script>
+
+    <script type="text/javascript">
+        function load() {
+            var yonghu= window.opener.document.getElementById("1").value;
+            document.getElementById("1").value = yonghu;
+        }
+    </script>
+    <!--验证学号格式-->
+    <script type="text/javascript">
+        //onblur失去焦点事件，用户离开输入框时执行 JavaScript 代码：
+        //函数：验证邮箱格式
+        function checknum(num){
+            if(num.length != 8)
+            {
+                alert("学号为八位，请重新输入");
+                document.getElementById("2").value="";
+            }
+        }
+    </script>
+    <!--验证学号格式-->
+    <script type="text/javascript">
+        //onblur失去焦点事件，用户离开输入框时执行 JavaScript 代码：
+        //函数：验证邮箱格式
+        function checknum2(num){
+            if(num.length != 8)
+            {
+                alert("作业号为八位，请重新输入");
+                document.getElementById("3").value="";
+            }
+        }
+    </script>
+</head>
+<body onload="load()">
+<div align="center">
+    <h1>发布作业</h1>
+    <form action="AddStudentServlet" method="post">
+
+        欢迎您：<input type="text" style="width: 200px; height:35px;" value="请输入内容" style="border:0px;" id="1" disabled=true>
+
+        <br><br>
+
+        班级号:
+        <input type="text" style="width: 200px; height:35px;" value=""
+               id="2" onblur="checknum(this.value)" oninput="value=value.replace(/[^\d]/g,'')">
+
+        <br><br>
+
+        作业号:
+        <input type="text" style="width: 200px; height:35px;" value=""
+               id="3"onblur="checknum2(this.value)" oninput="value=value.replace(/[^\d]/g,'')">
+
+        <br><br>
+
+        作业标题:
+        <input type="text" style="width: 200px; height:35px;" value=""
+               id="4">
+
+        <br><br>
+
+        作业内容:
+        <input type="text" style="width: 200px; height:35px;" value=""
+               id="5">
+
+        <br><br>
+
+        截止日期:
+        <input type="text" style="width: 200px; height:35px;" value=""
+               id="6">
+
+        <br><br>
+
+        <input type="button" value="确认" style="width: 60px; height: 30px;" onclick="beforeSubmit()">&nbsp&nbsp<input
+            type="reset" style="width: 60px; height: 30px;" value="清空">
+    </form>
+    <br>
+    <a href="TeacherIndex.html">返回上一页</a>
+</div>
+</body>
+</html>
+
+
+

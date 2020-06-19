@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  #spring mvc
+spring.thymeleaf.prefix: classpath:/templates/
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #driver-class-name: com.mysql.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/hwms?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/hwms?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    #url: jdbc:mysql://127.0.0.1:3306/hwms?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    #url: jdbc:mysql://localhost:3306/data?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai #���������ʱʹ��
+    username: root
+    password: Lhr990405
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
